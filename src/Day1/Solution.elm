@@ -1,10 +1,10 @@
 module Day1.Solution exposing (part1, part2)
 
 import Day1.Data exposing (data)
-import Array
+import Array exposing (Array)
 
-part1 = solve data
-part2 = 0
+part1 = solve1 data
+part2 = solve2 data
 
 parseInt : String -> Int
 parseInt char =
@@ -20,10 +20,10 @@ compareSame : Int -> Int -> Int
 compareSame x y =
   if x == y then x else 0
 
-solve : String -> Int
-solve str =
+solve1 : String -> Int
+solve1 str =
   let
-    array = Array.fromList (toIntList str)
+    array = str |> toIntList |> Array.fromList
     lastResult = compareSame
       (Maybe.withDefault 0 (Array.get 0 array))
       (Maybe.withDefault 0 (Array.get ((Array.length array) - 1) array))
@@ -33,3 +33,17 @@ solve str =
     (0, 0)
     array
     |> Tuple.second)
+
+solve2 : String -> Int
+solve2 str =
+  let
+    list = str |> toIntList
+    halfLen = (List.length list) // 2
+    topHalf = List.take halfLen list
+    bottomHalf = List.drop halfLen list
+  in
+    List.map2
+      (\x y -> if x == y then x + y else 0)
+      topHalf
+      bottomHalf
+    |> List.sum
