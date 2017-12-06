@@ -6,12 +6,14 @@ part1 = solve1 data
 part2 = solve2 data
 
 convert : String -> List (List Int)
-convert str = str
-  |> String.trim
-  |> String.split "\n"
-  |> List.map (String.split " ")
-  |> List.map (List.map String.toInt)
-  |> List.map (List.map (Result.withDefault 0))
+convert str =
+  let
+    toIntDefault = (String.toInt >> (Result.withDefault 0))
+  in
+    str
+      |> String.trim
+      |> String.split "\n"
+      |> List.map ((String.split " ") >> (List.map toIntDefault))
 
 solve1 : String -> Int
 solve1 str =
