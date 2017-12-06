@@ -39,11 +39,9 @@ solve2 str =
   let
     list = str |> toIntList
     halfLen = (List.length list) // 2
-    topHalf = List.take halfLen list
-    bottomHalf = List.drop halfLen list
   in
     List.map2
       (\x y -> if x == y then x + y else 0)
-      topHalf
-      bottomHalf
+      (List.take halfLen list)
+      (List.drop halfLen list)
     |> List.sum
