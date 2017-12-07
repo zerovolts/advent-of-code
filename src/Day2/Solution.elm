@@ -2,8 +2,8 @@ module Day2.Solution exposing (part1, part2)
 
 import Day2.Data exposing (data)
 
-part1 = solve1 data
-part2 = solve2 data
+part1 = solution1 data
+part2 = solution2 data
 
 convert : String -> List (List Int)
 convert str =
@@ -15,8 +15,8 @@ convert str =
       |> String.split "\n"
       |> List.map ((String.split " ") >> (List.map toIntDefault))
 
-solve1 : String -> Int
-solve1 str =
+solution1 : String -> Int
+solution1 str =
   let
     list = convert str
     minList = List.map (List.minimum >> Maybe.withDefault 0) list
@@ -45,8 +45,8 @@ findDivisible list =
     |> List.head
     |> Maybe.withDefault (1, 1)
 
-solve2 : String -> Int
-solve2 str =
+solution2 : String -> Int
+solution2 str =
   let
     list = convert str
     dividePair = (\(x, y) -> x // y)

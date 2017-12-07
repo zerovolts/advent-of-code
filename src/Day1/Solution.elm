@@ -3,8 +3,8 @@ module Day1.Solution exposing (part1, part2)
 import Day1.Data exposing (data)
 import Array exposing (Array)
 
-part1 = solve1 data
-part2 = solve2 data
+part1 = solution1 data
+part2 = solution2 data
 
 parseInt : String -> Int
 parseInt char =
@@ -20,8 +20,8 @@ compareSame : Int -> Int -> Int
 compareSame x y =
   if x == y then x else 0
 
-solve1 : String -> Int
-solve1 str =
+solution1 : String -> Int
+solution1 str =
   let
     array = str |> toIntList |> Array.fromList
     lastResult = compareSame
@@ -34,8 +34,8 @@ solve1 str =
     array
     |> Tuple.second)
 
-solve2 : String -> Int
-solve2 str =
+solution2 : String -> Int
+solution2 str =
   let
     list = str |> toIntList
     halfLen = (List.length list) // 2
