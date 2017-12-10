@@ -1,3 +1,5 @@
 module Day3.Data exposing (data)
 
-data = 265149
+
+data =
+    265149

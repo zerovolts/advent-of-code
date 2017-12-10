@@ -2,82 +2,113 @@ module Day3.Solution exposing (part1, part2)
 
 import Day3.Data exposing (data)
 
-part1 = solution1 data
-part2 = 0
+
+part1 =
+    solution1 data
+
+
+part2 =
+    0
+
 
 solution1 : Int -> Int
 solution1 address =
-  address
-    |> coordinates
-    |> distanceToCenter
+    address
+        |> coordinates
+        |> distanceToCenter
 
-distanceToCenter : (Int, Int) -> Int
-distanceToCenter (x, y) =
-  (abs x) + (abs y)
 
-coordinates : Int -> (Int, Int)
+distanceToCenter : ( Int, Int ) -> Int
+distanceToCenter ( x, y ) =
+    abs x + abs y
+
+
+coordinates : Int -> ( Int, Int )
 coordinates address =
-  let
-    index = address - 1
-    amplitude = getAmplitude address
-    wavelength = getWavelength address
-    x = discreteCos amplitude wavelength address
-    y = discreteSin amplitude wavelength address
-  in
-    (x, y)
+    let
+        index =
+            address - 1
+
+        amplitude =
+            getAmplitude address
+
+        wavelength =
+            getWavelength address
+
+        x =
+            discreteCos amplitude wavelength address
+
+        y =
+            discreteSin amplitude wavelength address
+    in
+    ( x, y )
+
 
 getAmplitude : Int -> Int
 getAmplitude address =
-  ((sqrt (toFloat address) + 1) / 2 |> ceiling) - 1
+    ((sqrt (toFloat address) + 1) / 2 |> ceiling) - 1
+
 
 getWavelength : Int -> Int
 getWavelength address =
-  let
-    amplitude = getAmplitude address
-  in
+    let
+        amplitude =
+            getAmplitude address
+    in
     if amplitude == 0 then
-      1
+        1
     else
-      (amplitude) * 8
+        amplitude * 8
+
 
 discreteCos : Int -> Int -> Int -> Int
 discreteCos amplitude wavelength x =
-  let
-    xMod = (x - 2) % wavelength
-    sideLength = getSideLength wavelength
-  in
+    let
+        xMod =
+            (x - 2) % wavelength
+
+        sideLength =
+            getSideLength wavelength
+    in
     if xMod < (sideLength - 1) then
-      amplitude
+        amplitude
     else if xMod < (sideLength * 2 - 3) then
-      -- linear decrease
-      ((sideLength * 2 - (4 + ((sideLength - 2) // 2)))) - xMod
+        -- linear decrease
+        (sideLength * 2 - (4 + ((sideLength - 2) // 2))) - xMod
     else if xMod < (sideLength * 3 - 3) then
-      -amplitude
+        -amplitude
     else if xMod < (sideLength * 4 - 5) then
-      -- linear increase
-      xMod - ((sideLength * 4 - (6 + ((sideLength - 2) // 2))))
+        -- linear increase
+        xMod - (sideLength * 4 - (6 + ((sideLength - 2) // 2)))
     else
-      amplitude
+        amplitude
+
 
 discreteSin : Int -> Int -> Int -> Int
 discreteSin amplitude wavelength y =
-  let
-    yMod = (y - 2) % wavelength
-    sideLength = getSideLength wavelength
-  in
+    let
+        yMod =
+            (y - 2) % wavelength
+
+        sideLength =
+            getSideLength wavelength
+    in
     if yMod < (sideLength - 2) then
-      -- linear increase
-      yMod - ((sideLength - (3 + ((sideLength - 2) // 2))))
+        -- linear increase
+        yMod - (sideLength - (3 + ((sideLength - 2) // 2)))
     else if yMod < (sideLength * 2 - 2) then
-      amplitude
+        amplitude
     else if yMod < (sideLength * 3 - 4) then
-      -- linear decrease
-      ((sideLength * 3 - (5 + ((sideLength - 2) // 2)))) - yMod
+        -- linear decrease
+        (sideLength * 3 - (5 + ((sideLength - 2) // 2))) - yMod
     else
-      -amplitude
+        -amplitude
+
 
 getSideLength perimeter =
-  (perimeter + 4) // 4
+    (perimeter + 4) // 4
+
+
 
 {--
 x: 0 | 1 1 0 -1 -1 -1  0  1 |  2 2 2 2 1 0 -1 -2 -2 -2 -2 -2 -1  0  1  2 |  3  3 3 3 3 3
